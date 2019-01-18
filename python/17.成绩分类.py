@@ -1,8 +1,10 @@
 score=eval(input("请输入学生成绩： "))
-if score >= 90:
+if 90<=score<=100:
     print("A")
 else:
-    if score<=60:
+    if 60<=score<=89:
+        print("B")
+    elif 0<=score<60:
         print("C")
     else:
-        print("B")
+        print("输入错误")
