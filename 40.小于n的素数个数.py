@@ -1,4 +1,4 @@
-n=int(input("请输入非负整数n:"))
+n=int(input("请输入n:"))
 i=1
 j=2
 counter=0
