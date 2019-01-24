@@ -2,11 +2,11 @@
 s=str(input("请输入一行字符:"))
 letter=0;blank=0;number=0;other=0
 for i in s:
-    if (i >= "a" and i <="z") or (i >="A" and i<="Z"):
+    if i.isalpha():
         letter=letter+1
     elif i==" ":
         blank=blank+1
-    elif i>="0" and i <="9":
+    elif i.isdigit():
         number=number+1
     else:
         other=other+1
