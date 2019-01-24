@@ -5,10 +5,9 @@ List=[]
 for i in range(1,int(n/2)+1):#判断因数的次数
     if n%i==0:
         if i==1:
-            continue
-        List.append(str(i))
-        n=n/i 
-    else:
-        break
+            List.append(str(i))
+            n=n/i
+        else:
+            break
 s="*".join(List)
 print(N,"=",s)

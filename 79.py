@@ -4,5 +4,6 @@ for i in range(1,8):
         x=random.randint(1,51)
         for j in range(x+1):
             print(j*"*")
+        break
     
     
