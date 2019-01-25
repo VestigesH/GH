@@ -1,12 +1,13 @@
 #题目：求一个3*3矩阵主对角线元素之和。
-L=[[1,2,3],[4,5,6],[7,8,9]]
-for i in L:
+s=eval(input("请输入3*3的矩阵:"))
+a_list=list(s)
+for i in a_list:
     print(i)
 sum=0
 for j in range(3):
     for k in range(3):
-        x=L[j]
-        y=x[k]
+        b_list=a_list[j]
+        S=b_list[k]
         if j==k:
-            sum=sum+y
-print("对角线之和为",sum)
+            sum=sum+S
+print("主对角线元素之和为",sum)

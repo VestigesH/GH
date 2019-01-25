@@ -4,6 +4,6 @@ w=len(n)
 print(w,"位数")
 List=list(n)
 List.reverse()
-print(" ".join(List))
+print("".join(List))
 
 

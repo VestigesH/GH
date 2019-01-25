@@ -2,6 +2,7 @@
 x=open("D:\\text\\爱丽丝梦游仙境.txt","r",buffering=0)
 words=list(x)
 for i in words:
-    if word.count(i) >10:
+    if words.count(i) >10:
         words.sort()
         print(words.reverse())
+x.close()

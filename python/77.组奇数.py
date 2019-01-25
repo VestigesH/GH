@@ -2,7 +2,7 @@
 s= 1
 L=[]
 S=0
-for i in range(1,9):
+for i in range(1,9):#i为组成奇数的位数
     if i==1:
         s=4
     elif i==2:
