@@ -3,8 +3,12 @@ s=eval(input("输入一组数:"))
 L=list(s)
 M=max(L)
 m=min(L)
-M,L[0]=L[0],M
-m,L[-1]=L[-1],m
+x=L.index(M)
+y=L.index(m)
+L[x]=L[0]
+L[0]=M
+L[y]=L[-1]
+L[-1]=m
 print(L)
 
 
