@@ -4,21 +4,20 @@
 #include <stdio.h>
 int main()
 {
-	int i,j,m,num;
-	for(i=1;i<6000;i++)
+	int i=0,j=1,sum=1;
+	while(1)
 	{
-		num=i;
-		m=0;
-		for(j=1;j<6;j++)
+		j=sum;
+		for(i=0;i<5;i++)
 		{
-			if(4*(i-1)/5%1 !=0)
-			{
-				m=1;
-				break;
-			}
-			i=4*(i-1)/5;
+			if((j-1)%5==0) j=(j-1)/5*4;
+			else break;
 		}
-		if(m==0) printf("总数为%d",num); 
+		if(i==5&&j>0) break;
+		sum+=1;
 	}
+	printf("桃子最少有%d个", sum);
+	return 0;
 }
+
 
