@@ -1,78 +1,157 @@
+
+/* 
+影片信息管理系统功能 :
+					(1).录入影片信息 
+					(2).查询影片信息 
+					(3).打印影片信息
+					(4).修改影片信息 
+					(5).删除影片信息 
+					(6).统计影片总数
+					(7).查看所有影片信息
+*/ 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#define m 30 //影片数量最大容纳度 
 
-struct Film 					//影片信息结构体 
+#define m 30 //影片数量最大容纳度 
+#define m1  //记录影片数目 
+
+
+struct Film 		//影片信息结构体 :电影编号、电影名称 、主演、 导演 、地区、 上映时间 、电影类型 、电影规格 、电影评分 	 
 {
-	int num;					//电影编号 
-	char name[20];				//电影名称 
-	char actor[30]; 			//主演 
-	char direct[10];			//导演 
-	char area[10];				//地区 
-	char date[10];				//上映时间 
-	char type[10];				//电影类型 
-	char norms[10];				//电影规格 
-	float score;				//电影评分 	
+	int num;				 
+	char name[20];				
+	char actor[30]; 			 
+	char direct[10];			
+	char area[10];				 
+	char date[10];				
+	char type[10];				
+	char norms[10];				
+	float score;				
 	struct Film *next;
-}film[1000],f[1000];
+}film[30],f[30];
+
 
 struct User					//用户结构体 
 {
     char user[20];
     char code[20];
-}save; 							//save结构体用来保存用户名和密码 
-	FILE *fp;
+}save; 						//save结构体用来保存用户名和密码 
+
  
+ 
+//函数调用 
+//1.功能函数 
+
+void Add(); 				// 录入 
+void Change();				//修改 
+void Del();					//删除 
+void Search();				//查找 
+void Save();				//保存影片信息 
+void landing();				//登陆 
+void registered();			//注册 
+void length();				//影片数量 
+void Printall(); 			//打印所有影片信息 
+void printFilm();			//打印一个影片信息 
+void write();				//写入用户信息 
+ 
+
+//2.界面函数 
+void menu(); 				//登陆注册界面 
+void menu1();				//影片信息管理系统功能界面 
+
 
 /*---------------------------------------------------------------------函数调用部分-------------------------------------------------------------------------------------------*/
 
+
 /*=========================================影片信息函数==========================================*/ 
- 
+
+
+
 //录入影片信息
 
 void Add(struct Film *film)
 {
+	int n;					//录入新影片数 
+	char ch;
 	printf("\n\t\t\t**************录入新影片**************\n"); 
 	struct Film *p =(struct Film*)malloc(sizeof(struct Film));
 	if(p)
 	{
-		p->next=film->next;
-		film->next=p;
-		printf("\t\t\t 请输入要录入的影片编号:");
-		scanf("%d",&p->num);
-		printf("\t\t\t 请输入要录入的影片名称:");
-		scanf("%s",p->name);
-		printf("\t\t\t 请输入要录入的影片主演:");
-		scanf("%s",p->actor);
-		printf("\t\t\t 请输入要录入的影片导演:");
-		scanf("%s",p->direct);
-		printf("\t\t\t 请输入要录入的影片地区:");
-		scanf("%s",p->area);
-		printf("\t\t\t 请输入要录入的上映时间:");
-		scanf("%s",p->date);
-		printf("\t\t\t 请输入要录入的影片类型:");
-		scanf("%s",p->type);
-		printf("\t\t\t 请输入要录入的影片规格:");
-		scanf("%s",p->norms);
-		printf("\t\t\t 请输入要录入的影片评分:");
-		scanf("%f",&p->score); 
-		printf("\t\t\t Congractulations! 成功录入新影片!");
-	}
-	else
-	{
-		printf("\t\t\t Sorry! 录入失败!\n"); 
-	}
-	getchar(); 
-	getchar(); 
+		FILE *fp;
+		fp=fopen("film.txt","wt+");
+    	if(fp==NULL)
+       {
+          printf("\n\t\t\t Sorry! 文件打开失败!\n");
+          exit(0);
+       }
+    	do
+    	{
+            p->next=film->next;
+			film->next=p;
+			printf("\t\t\t 请输入要录入的影片编号:");
+			scanf("%d",p->num);
+			fputc(p->num,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片名称:");
+			scanf("%s",p->name);
+			fputs(p->name,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片主演:");
+			scanf("%s",p->actor);
+			fputs(p->actor,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片导演:");
+			scanf("%s",p->direct);
+			fputs(p->direct,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片地区:");
+			scanf("%s",p->area);
+			fputs(p->area,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的上映时间:");
+			scanf("%s",p->date);
+			fputs(p->date,fp);
+			getchar();  
+			printf("\t\t\t 请输入要录入的影片类型:");
+			scanf("%s",&p->type);
+			fputs(p->type,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片规格:");
+			scanf("%s",p->norms);
+			fputs(p->norms,fp);
+			getchar(); 
+			printf("\t\t\t 请输入要录入的影片评分:");
+			scanf("%f",&p->score); 
+			fputc(p->score,fp);
+			getchar();          
+			if(fwrite(&film,sizeof(struct Film),1,fp)!=1)
+ 			{
+ 				printf("\n\t\t\t Sorry! 录入失败\n");
+ 				exit(0);
+ 			} 
+ 			else
+			{
+				n++; 
+				printf("\n\t\t\t Congractulations! 成功录入第%d个新影片!",n);
+			} 
+ 			printf("\n");
+ 			printf("\n\t\t\t是否继续录入影片信息？请输入y or n ?\t");
+ 			scanf("%c",&ch);
+ 		}while(ch=='y');
+		  
+		fclose(fp);         						
+   	}   	  
 }
 
-// 查询影片信息
 
-void Search(struct Film *p)
+// 查询影片信息 
+
+void Search(struct Film *film)
 {
-	int i,k,choice;
+	int i,k=0,choice;
 	int film_num;
 	char *film_name;
 	char *film_actor;
@@ -88,7 +167,6 @@ void Search(struct Film *p)
 	char c[3];
 	do
 	{
-		k=0;
 		printf("\n\t\t\t**************查找影片途径**************\n");
 		printf("\t\t\t|  请输入下列方式前的序号进行选择      |\n");
 		printf("\t\t\t|      1.影片编号                      |\n");
@@ -114,7 +192,7 @@ void Search(struct Film *p)
 					scanf("%d",&film_num);
 					for(i=0;i<m;i++)
 					{
-						if(film[i] .num==film_num)
+						 if(film[i].num==film_num)
 						{
 							f[i]=film[i];
 							k++;
@@ -394,7 +472,9 @@ void Search(struct Film *p)
 	}while(strcmp(c,"yes")==0);//判断结束 
 }
 
+
 //打印影片信息 
+
 void printFilm(struct Film *film)
 {
 	if(!film) 
@@ -408,6 +488,7 @@ void printFilm(struct Film *film)
 		printf("%d\t %s\t %s\t %s\t %s\t %s\t %s\t %s\t %d\t",film->num,film->name,film->actor,film->direct,film->area,film->date,film->type,film->norms,film->score);
 	} 
 }
+
 
 //修改影片信息
 
@@ -486,8 +567,9 @@ void Change(struct Film *film)
 		}
 	}
 	getchar();
-	getchar(); 
+	getchar();
 }	
+
 
 //删除影片信息
 
@@ -523,6 +605,7 @@ void Del(struct Film *film)
     getchar();
 } 
 
+
 //统计影片总数
 
 void Length(struct Film *film)
@@ -538,6 +621,7 @@ void Length(struct Film *film)
 	}
 	printf("\n\n\t\t\t  影片总数为；%d",count);
 } 
+ 
  
 //查看所有影片信息
 
@@ -568,11 +652,12 @@ void  Printall(struct Film *film)
 	getchar();
 }
 
+
 /*===================================================主界面函数=========================================*/ 
 
-void menu()
+void menu()       //注册登陆界面 
 {
-	int choice();
+	int choice;
 	printf("\n\n\n\t\t\t------------------------------------------------------\n");
 	printf("\t\t\t|      		*****  WELCOME  *****  		     |\n");
 	printf("\t\t\t------------------------------------------------------\n");
@@ -581,46 +666,69 @@ void menu()
 	printf("\t\t\t|               3.退出		                     |\n");
 	printf("\t\t\t------------------------------------------------------\n");
 	printf("\n\n\t\t\t请在1-3之间进行选择您需要的功能:");
-} 
-void menu1()
-{
-	int choice1;
-	printf("\n\n\n\t\t\t------------------------------------------------------\n");
-	printf("\t\t\t|     ***** 您好,欢迎使用影片信息管理系统! *****     |\n");
-	printf("\t\t\t------------------------------------------------------\n");
-	printf("\t\t\t|           1.录入影片信息                           |\n");
-	printf("\t\t\t|	    2.查找影片信息	                     |\n");
-	printf("\t\t\t|           3.修改影片信息		             |\n");
-	printf("\t\t\t|           4.删除影片信息		             |\n");
-	printf("\t\t\t|           5.查看影片总数	                     |\n");
-	printf("\t\t\t|           6.查看影片信息		             |\n");
-	printf("\t\t\t|           7.退出系统                               |\n"); 
-	printf("\t\t\t------------------------------------------------------\n");
-	printf("\n\n\t\t\t请在1-7之间进行选择您需要的功能:");
-	scanf("%d",&choice1);
-	if(choice1==7)	exit(0);
-	switch(choice1)
+	scanf("%d",&choice);
+	switch(choice)
 	{
 		case 1:
-			Add(film);
+			registered();
 			break;
 		case 2:
-			Search(film);
+			landing();
 			break;
 		case 3:
-			Change(film);
 			break;
-		case 4:
-			Del(film);
-			break;
-		case 5:
-			Length(film);
-			break;
-		case 6:
-			Printall(film);
-			break;		
+		default:
+			{
+				printf("\n\t\t\t Sorry! 输入错误，请重新输入正确序号!");
+				menu(); 
+			}
 	}
+} 
+
+void menu1()     //影院管理系统功能界面 
+{
+	int choice1;
+	while(1)
+	{
+		printf("\n\n\n\t\t\t------------------------------------------------------\n");
+		printf("\t\t\t|     ***** 您好,欢迎使用影片信息管理系统! *****     |\n");
+		printf("\t\t\t------------------------------------------------------\n");
+		printf("\t\t\t|           1.录入影片信息                           |\n");
+		printf("\t\t\t|	    2.查找影片信息	                     |\n");
+		printf("\t\t\t|           3.修改影片信息		             |\n");
+		printf("\t\t\t|           4.删除影片信息		             |\n");
+		printf("\t\t\t|           5.查看影片总数	                     |\n");
+		printf("\t\t\t|           6.查看影片信息		             |\n");
+		printf("\t\t\t|           7.退出系统                               |\n"); 
+		printf("\t\t\t------------------------------------------------------\n");
+		printf("\n\n\t\t\t请在1-7之间进行选择您需要的功能:");
+		scanf("%d",&choice1);
+		if(choice1==7)	exit(0);
+		switch(choice1)
+		{
+			case 1:
+				Add(film);
+				break;
+			case 2:
+				Search(film);
+				break;
+			case 3:
+				Change(film);
+				break;
+			case 4:
+				Del(film);
+				break;
+			case 5:
+				Length(film);
+				break;
+			case 6:
+				Printall(film);
+				break;		
+		}
+	}
+	
 }
+
  
 /*===================================================用户部分函数=========================================*/
  
@@ -634,6 +742,7 @@ void registered()
         printf("\n\t\t\t 用户注册\n");
         printf("\t\t\t 请输入您的用户名:");
         scanf("%s",save.user);
+        FILE *fp;
         fp=fopen(save.user,"r");					//判断用户名是否重复
         if(fp!=NULL) 
         {
@@ -650,7 +759,9 @@ void registered()
         if(strcmp(save.code,temp)!=0)
         printf("\n\t\t\t Sorry! 两次密码不一致,请重新输入");
     }while(strcmp(save.code,temp)!=0);
+    
     //用户名密码无误，写入文档储存用户信息
+    FILE *fp;
     fp=fopen(save.user,"w");
     if(fp==NULL)
        {
@@ -665,9 +776,13 @@ void registered()
 		fclose(fp);            						
     }
 }
+
+
 //写入用户信息
+
 void write()
 {
+	FILE *fp;
     if(fwrite(&save,sizeof(User),1,fp)!=1)
     {
         printf("\n\t\t\t Sorry!写入文件错误!");
@@ -684,6 +799,7 @@ void landing()
     printf("\n\t\t\t 请输入用户名:");
     scanf("%s",u);
     //判断用户名是否存在
+    FILE *fp;
     fp=fopen(u,"r+");
     temp[0]='0';
     if(fp==NULL)
@@ -697,7 +813,8 @@ void landing()
             registered();
         }
         else return landing();
-    }
+    } 
+    
     //验证密码是否正确
     do
     {
@@ -725,28 +842,16 @@ void landing()
 
 
  
- 
 /*-------------------------------------------------------------------------------主函数--------------------------------------------------------------------------------------------*/ 
+
+
 int main()
 {
 	struct Film *film=(struct Film *)malloc(sizeof(struct Film));
 	film->next=NULL;
-	int choice;
 	while(1)
 	{
-		menu();
-		scanf("%d",&choice);
-		if(choice==3) break;
-		switch(choice)
-		{
-			case 1:
-				registered();
-				break;
-			case 2:
-				landing();
-				break;
-		}	
+		menu();	
 	}
 }
 
- 
