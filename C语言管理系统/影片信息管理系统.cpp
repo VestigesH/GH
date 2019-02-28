@@ -87,6 +87,7 @@ void readdata(void)
 
 /*---------------------------------------------------------------------函数调用部分-------------------------------------------------------------------------------------------*/
 
+
 /*=========================================影片信息函数==========================================*/
 
 //录入影片信息
@@ -153,28 +154,23 @@ void Add()
 }
 
 
-// 查询影片信息
+// 查询影片信息(链表查询和数组查询结合) 
 
 void Search()
 {
-		int i,k,choice;
+	int i,k,choice;
 	int film_num;
 	char *film_name;
 	char *film_actor;
 	char *film_direct;
-	int film_area;
-	char area[1000];
+	char *film_area;
 	char *film_date;
-	int film_type;
-	char type[1000];
-	int film_norms;
-	char norms[1000];
+	char *film_type;
+	char *film_norms;
 	float film_score;
 	char c[3];
-
 	struct Film * hp=film;
-	struct Film f[100];
-	int m=30;
+	struct Film f[100];  //数组查询 
 	do
 	{
 		k=0;
@@ -199,7 +195,7 @@ void Search()
 		{
 			case 1:											//按照编号查询
 				{
-					printf("\t\t\t请输入要查询的影片编号:\n");
+					printf("\t\t\t请输入要查询的影片编号:");
 					scanf("%d",&film_num);
                     hp=film->next;
                     while(hp!=NULL)
@@ -261,57 +257,10 @@ void Search()
                     }
 				}
 				break;
-		/*	case 5:											//按照地区查询
+			case 5:											//按照地区查询
 				{
-					printf("\t\t\t请输入要查询的影片地区(1.华语 2.香港 3.美国 4.欧洲 5.韩国 6.日本 7.印度 8.其他):");
-					scanf("%d",&film_area);
-					switch(film_area)
-					{
-						case 1:
-							{
-								strcpy(area,"华语");
-							}
-							break;
-						case 2:
-							{
-								strcpy(area,"香港");
-							}
-							break;
-						case 3:
-							{
-								strcpy(area,"美国");
-							}
-							break;
-						case 4:
-							{
-								strcpy(area,"欧洲");
-							}
-							break;
-						case 5:
-							{
-								strcpy(area,"韩国");
-							}
-							break;
-						case 6:
-							{
-								strcpy(area,"日本");
-							}
-							break;
-						case 7:
-							{
-								strcpy(area,"印度");
-							}
-							break;
-						case 8:
-							{
-								strcpy(area,"其他");
-							}
-							break;
-						default:
-							{
-								printf("\t\t\t查询失败！请输入正确序号进行查询！");
-							}
-					}	
+					printf("\t\t\t请输入要查询的影片地区:");
+					scanf("%s",&film_area);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -323,7 +272,7 @@ void Search()
                         hp=hp->next;
                     }
 				}
-				break;*/
+				break;
 			case 6:											//按照时间查询
 				{
 					printf("\t\t\t请输入要查询的影片上映时间:");
@@ -340,66 +289,10 @@ void Search()
                     }
 				}
 				break;
-		/*	case 7:											//按照类型查询
+			case 7:											//按照类型查询
 				{
-					printf("\t\t\t请输入要查询的影片类型(1.喜剧 2.爱情 3.动作 4.枪战 5.犯罪 6. 惊悚 7.悬疑 8.家庭 9.青春 10.其他):");
-					scanf("%d",&film_type);
-					switch(film_type)
-					{
-						case 1:
-							{
-								strcpy(type,"喜剧");
-							}
-							break;
-						case 2:
-							{
-								strcpy(type,"爱情");
-							}
-							break;
-						case 3:
-							{
-								strcpy(type,"动作");
-							}
-							break;
-						case 4:
-							{
-								strcpy(type,"枪战");
-							}
-							break;
-						case 5:
-							{
-								strcpy(type,"犯罪");
-							}
-							break;
-						case 6:
-							{
-								strcpy(type,"惊悚");
-							}
-						case 7:
-							{
-								strcpy(type,"悬疑");
-							}
-							break;
-						case 8:
-							{
-								strcpy(type,"家庭");
-							}
-							break;
-						case 9:
-							{
-								strcpy(type,"青春");
-							}
-							break;
-						case 10:
-							{
-								strcpy(type,"其他");
-							}
-							break;
-						default:
-							{
-								printf("\t\t\t查询失败！请输入正确序号进行查询！");
-							}
-					}
+					printf("\t\t\t请输入要查询的影片类型:");
+					scanf("%s",&film_type);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -411,47 +304,15 @@ void Search()
                         hp=hp->next;
                     }
 				}
-				break;*/
-			/*case 8:											//按照规格查询
+				break;
+			case 8:											//按照规格查询
 				{
-					printf("\t\t\t请输入要查询的影片规格(1.巨制 2.院线 3.杜比音效 4.经典 5.独播 ):");
-					scanf("%d",&film_norms);
-					switch(film_norms)
-					{
-						case 1:
-							{
-								strcpy(norms,"巨制");
-							}
-							break;
-						case 2:
-							{
-								strcpy(norms,"院线");
-							}
-							break;
-						case 3:
-							{
-								strcpy(norms,"杜比音效");
-							}
-							break;
-						case 4:
-							{
-								strcpy(norms,"经典");
-							}
-							break;
-						case 5:
-							{
-								strcpy(norms,"独播");
-							}
-							break;
-						default:
-							{
-								printf("\t\t\t查询失败！请输入正确序号进行查询！");
-							}
-					}
+					printf("\t\t\t请输入要查询的影片规格:");
+					scanf("%s",&film_norms);
 					hp=film->next;
                     while(hp!=NULL)
                     {
-                        if(hp->type==film_type)
+                        if(hp->norms==film_norms)
                         {
                             f[k]=*hp;   
                             k++;
@@ -459,7 +320,7 @@ void Search()
                         hp=hp->next;
                     }
 				}
-				break;*/
+				break;
 			case 9:											//按照评分查询
 				{
 					printf("\t\t\t请输入要查询的影片评分:");
@@ -477,7 +338,8 @@ void Search()
 				}
 				break;
 			case 0: break;
-			default: printf("\t\t\t查询错误！请输入正确的查询方式");
+			default:
+				printf("\t\t\t查询错误！请输入正确的查询方式");
 		}
 		
 		if(k==0)
@@ -486,15 +348,16 @@ void Search()
 			printf("\t\t\t\t  	   Sorry! 没有您所要查找的内容！\n");
 			printf("======================================================================================================================\n");
 		}
-		else
+		else//以表格形式打印出所查询到的影片信息 
 		{
-			printf("====================================================================================================================\n");
-			printf("影片编号：\t 影片名称：\t 影片主演：\t 影片片导演：\t 影片地区：\t 上映时间：\t 影片类型：\t 影片规格：\t 影片评分：\n ");
+			printf("\t=================================================================================================================================================\n");
+			printf("\t影片编号：\t 影片名称：\t 影片主演：\t 影片片导演：\t 影片地区：\t 上映时间：\t 影片类型：\t 影片规格：\t 影片评分：\n ");
+			
 			for(i=0;i<k;i++)
 			{
-				printf("%8d %16s %16s %16s %16s %16s %16s %16s %8f\n",f[i].num,f[i].name,f[i].actor,f[i].direct,f[i].area,f[i].date,f[i].type,f[i].norms,f[i].score);
+				printf("\t%8d %16s %16s %16s %16s %16s %16s %16s %8f\n",f[i].num,f[i].name,f[i].actor,f[i].direct,f[i].area,f[i].date,f[i].type,f[i].norms,f[i].score);
 			}
-			printf("====================================================================================================================\n");
+			printf("\t=================================================================================================================================================\n");
 			printf("\t\t\t以上为查询内容！\n");
 		}
 		printf("\t\t\t您是否要继续查找？请输入yes或no! \t");
@@ -583,6 +446,7 @@ void Change()
 	getchar();
 }
 
+
 //删除影片信息
 
 void Del()
@@ -617,6 +481,7 @@ void Del()
     getchar();
 }
 
+
 //统计影片总数
 
 void Length()
@@ -630,6 +495,7 @@ void Length()
 	}
 	printf("\n\n\t\t\t  影片总数为；%d",count);
 }
+
 
 //查看所有影片信息
 
@@ -695,6 +561,7 @@ void menu()
 	}
 } 
 
+
 //影院管理系统功能界面 
 
 void menu1()     
@@ -756,7 +623,7 @@ void registered()
         printf("\n\t\t\t 用户注册\n");
         printf("\t\t\t 请输入您的用户名:");
         scanf("%s",save.user);
-        fp=fopen(save.user,"r");					//判断用户名是否重复
+        fp=fopen(save.user,"r");				//判断用户名是否重复
         if(fp!=NULL)
         {
            printf("\n\t\t\t Sorry! 该用户名已存在!");
@@ -772,6 +639,7 @@ void registered()
         if(strcmp(save.code,temp)!=0)
         printf("\n\t\t\t Sorry! 两次密码不一致,请重新输入");
     }while(strcmp(save.code,temp)!=0);
+    
     //用户名密码无误，写入文档储存用户信息
     fp=fopen(save.user,"w");
     if(fp==NULL)
@@ -787,6 +655,7 @@ void registered()
 		fclose(fp);
     }
 }
+
 //写入用户信息
 void write()
 {
@@ -857,8 +726,9 @@ void landing()
 
 int main()
 {
-	struct Film *film=(struct Film *)malloc(sizeof(struct Film));
 	film->next=NULL;
+	film->num=0;
+    readdata();
 	while(1)
 	{
 		menu();	
