@@ -617,14 +617,15 @@ void menu1()
 void registered()
 {
     char temp[20];
-    FILE *fp=NULL;
+    char user[20];
+    FILE *fp;
     do
     {
         printf("\n\t\t\t 用户注册\n");
         printf("\t\t\t 请输入您的用户名:");
-        scanf("%s",save.user);
-        fp=fopen(save.user,"r");				//判断用户名是否重复
-        if(fp!=NULL)
+        scanf("%s",user);
+        fp=fopen("user.txt","r+");				//判断用户名是否重复
+        if(strcmp(user,save.user)==0)
         {
            printf("\n\t\t\t Sorry! 该用户名已存在!");
            fclose(fp);
@@ -634,14 +635,14 @@ void registered()
         }
         printf("\n\t\t\t 请输入您的密码:");				//确认两次密码输入是否一致
         scanf("%s",save.code);
-        printf("\n\t\t\t 请再次输入确认密码:");
+        printf("\n\t\t\t 请再次输入确认密码:"); 
         scanf("%s",temp);
         if(strcmp(save.code,temp)!=0)
         printf("\n\t\t\t Sorry! 两次密码不一致,请重新输入");
     }while(strcmp(save.code,temp)!=0);
     
     //用户名密码无误，写入文档储存用户信息
-    fp=fopen(save.user,"w");
+    fp=fopen("user.txt","w");
     if(fp==NULL)
        {
           printf("\n\t\t\t Sorry! 注册失败!\n");
@@ -651,7 +652,7 @@ void registered()
     {
         system("cls");
         printf("\n\t\t\t 注册成功!");
-        getchar();
+        fprintf(fp,"%s %s\n",save.user,save.code); 
 		fclose(fp);
     }
 }
@@ -659,13 +660,14 @@ void registered()
 //写入用户信息
 void write()
 {
-	FILE *fp=fopen(save.user,"w");
+	FILE *fp;
+	fp=fopen("user.txt","w+");
     if(fwrite(&save,sizeof(User),1,fp)!=1)
     {
         printf("\n\t\t\t Sorry!写入文件错误!");
         exit(0);
     }
-    else	fwrite(&save,sizeof(User),1,fp);
+    else	fprintf(fp,"%s %s\n",save.user,save.code);
     fclose(fp);
 }
 
@@ -678,7 +680,7 @@ void landing()
     printf("\n\t\t\t 请输入用户名:");
     scanf("%s",u);
     //判断用户名是否存在
-    FILE * fp=fopen(u,"r+");
+    FILE * fp=fopen("user.txt","r");
     temp[0]='0';
     if(fp==NULL)
     {
