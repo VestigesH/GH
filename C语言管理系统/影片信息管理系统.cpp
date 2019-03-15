@@ -29,6 +29,7 @@ void registered();			//注册
 void Length();				//影片数量  
 void printall();			//打印影片信息
 void write();               //写入用户的信息  
+void savedata();            //保存影片信息 
  
 
 //2.界面函数 
@@ -75,14 +76,29 @@ void readdata(void)
 			exit(1);
 		}
 		fread(node,sizeof(struct Film),1,fp);
-		if(feof(fp))
-			break;
 		node->next=film->next;//头插法
 		film->next=node;
 		film->num++;          //第一个节点不存储数据，就把其中的num用来放数据的个数
 	}
 	fclose(fp);
 }
+
+/*void savedata()
+{
+	FILE *fp;
+	Film *film;
+	if((fp=fopen("Savedata.txt","ab+"))==NULL)
+	{
+		printf("打开文件错误!\n");
+		return;
+	}
+	while(film)
+	{
+		fwrite(film,sizeof(Film),1,fp);
+		film=film->next;
+	}
+	fclose(fp); 
+}*/
 
 
 /*---------------------------------------------------------------------函数调用部分-------------------------------------------------------------------------------------------*/
@@ -113,35 +129,25 @@ void Add()
         	film->next=p;
         	printf("\t\t\t 请输入要录入的影片编号:");
        		scanf("%d",&p->num);
-       		getchar();
         	printf("\t\t\t 请输入要录入的影片名称:");
         	scanf("%s",p->name);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片主演:");
         	scanf("%s",p->actor);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片导演:");
         	scanf("%s",p->direct);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片地区:");
         	scanf("%s",p->area);
-        	getchar();
         	printf("\t\t\t 请输入要录入的上映时间:");
         	scanf("%s",p->date);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片类型:");
         	scanf("%s",p->type);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片规格:");
         	scanf("%s",p->norms);
-        	getchar();
         	printf("\t\t\t 请输入要录入的影片评分:");
         	scanf("%f",&p->score);
-        	getchar();
         	fwrite(p,sizeof(struct Film),1,fp);
-        	
         	n++; 
-			printf("\n\t\t\t Congractulations! 成功录入第%d个新影片!",n++);
+			printf("\n\t\t\t Congractulations! 成功录入第%d个新影片!",n);
 			printf("\n");
  			printf("\n\t\t\t是否继续录入影片信息？请输入yes or no ?\t");
  			scanf("\n\t\t\t%s",&A);
@@ -154,7 +160,7 @@ void Add()
 }
 
 
-// 查询影片信息(链表查询和数组查询结合) 
+// 查询影片信息 
 
 void Search()
 {
@@ -170,7 +176,7 @@ void Search()
 	float film_score;
 	char c[3];
 	struct Film * hp=film;
-	struct Film f[100];  //数组查询 
+	struct Film f[100];  
 	do
 	{
 		k=0;
@@ -195,7 +201,7 @@ void Search()
 		{
 			case 1:											//按照编号查询
 				{
-					printf("\t\t\t请输入要查询的影片编号:");
+					printf("\t\t\t请输入要查询的影片编号:");  
 					scanf("%d",&film_num);
                     hp=film->next;
                     while(hp!=NULL)
@@ -212,7 +218,7 @@ void Search()
 			case 2:											//按照名称查询
 				{
 					printf("\t\t\t请输入要查询的影片名称:");
-					scanf("%s",&film_name);
+					scanf("%s",film_name);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -228,7 +234,7 @@ void Search()
 			case 3:											//按照主演查询
 				{
 					printf("\t\t\t请输入要查询的影片主演:");
-					scanf("%s",&film_actor);
+					scanf("%s",film_actor);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -244,7 +250,7 @@ void Search()
 			case 4:											//按照导演查询
 				{
 					printf("\t\t\t请输入要查询的影片导演:");
-					scanf("%s",&film_direct);
+					scanf("%s",film_direct);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -260,7 +266,7 @@ void Search()
 			case 5:											//按照地区查询
 				{
 					printf("\t\t\t请输入要查询的影片地区:");
-					scanf("%s",&film_area);
+					scanf("%s",film_area);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -276,7 +282,7 @@ void Search()
 			case 6:											//按照时间查询
 				{
 					printf("\t\t\t请输入要查询的影片上映时间:");
-					scanf("%s",&film_date);
+					scanf("%s",film_date);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -292,7 +298,7 @@ void Search()
 			case 7:											//按照类型查询
 				{
 					printf("\t\t\t请输入要查询的影片类型:");
-					scanf("%s",&film_type);
+					scanf("%s",film_type);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -308,7 +314,7 @@ void Search()
 			case 8:											//按照规格查询
 				{
 					printf("\t\t\t请输入要查询的影片规格:");
-					scanf("%s",&film_norms);
+					scanf("%s",film_norms);
 					hp=film->next;
                     while(hp!=NULL)
                     {
@@ -340,25 +346,31 @@ void Search()
 			case 0: break;
 			default:
 				printf("\t\t\t查询错误！请输入正确的查询方式");
+				break;
 		}
 		
 		if(k==0)
 		{
-			printf("======================================================================================================================\n");
-			printf("\t\t\t\t  	   Sorry! 没有您所要查找的内容！\n");
-			printf("======================================================================================================================\n");
+			printf("\t\t======================================================================================================================\n");
+			printf("\t\t\t\t\t\t  	   Sorry! 没有您所要查找的内容！\n");
+			printf("\t\t======================================================================================================================\n");
 		}
-		else//以表格形式打印出所查询到的影片信息 
+		else
 		{
-			printf("\t=================================================================================================================================================\n");
-			printf("\t影片编号：\t 影片名称：\t 影片主演：\t 影片片导演：\t 影片地区：\t 上映时间：\t 影片类型：\t 影片规格：\t 影片评分：\n ");
-			
 			for(i=0;i<k;i++)
 			{
-				printf("\t%8d %16s %16s %16s %16s %16s %16s %16s %8f\n",f[i].num,f[i].name,f[i].actor,f[i].direct,f[i].area,f[i].date,f[i].type,f[i].norms,f[i].score);
+				printf("\n");
+				printf("\t\t\t\t\t 影片编号:%d \n",f[i].num);
+				printf("\t\t\t\t\t 影片名称:%s \n",f[i].name);
+				printf("\t\t\t\t\t 影片主演:%s \n",f[i].actor);
+				printf("\t\t\t\t\t 影片导演:%s \n",f[i].direct);
+				printf("\t\t\t\t\t 影片地区:%s \n",f[i].area);
+				printf("\t\t\t\t\t 上映时间:%s \n",f[i].date);
+				printf("\t\t\t\t\t 影片类型:%s \n",f[i].type);
+				printf("\t\t\t\t\t 影片规格:%s \n",f[i].norms);
+				printf("\t\t\t\t\t 影片评分:%f \n",f[i].score);
 			}
-			printf("\t=================================================================================================================================================\n");
-			printf("\t\t\t以上为查询内容！\n");
+			printf("\t\t\t以上为您所查询的内容！\n");
 		}
 		printf("\t\t\t您是否要继续查找？请输入yes或no! \t");
 		scanf("\t\t\t%s",c);
@@ -438,12 +450,11 @@ void Change()
 					scanf("%f",&pc->score);
 					break;
 			}
+			//savedata();
 			printf("\t\t\t  影片信息修改成功！");
 			break;
 		}
 	}
-	getchar();
-	getchar();
 }
 
 
@@ -476,9 +487,8 @@ void Del()
 			printf("\n\n\t\t\t 删除成功!\n");
 			break;
 		}
+		//savedata();
     }
-    getchar();
-    getchar();
 }
 
 
@@ -505,25 +515,18 @@ void  Printall()
 	struct Film *p=film->next;
 	if(p)
 	{
+		printf("\t=================================================================================================================================================\n");
+		printf("\t影片编号  \t 影片名称  \t 影片主演  \t 影片导演  \t 影片地区  \t 上映时间\t影片类型\t影片规格\t影片评分 \n ");
 		while(p)
 		{
 			printf("\n");
-			printf("\t\t\t\t\t 影片编号:%d \n",p->num);
-			printf("\t\t\t\t\t 影片名称:%s \n",p->name);
-			printf("\t\t\t\t\t 影片主演:%s \n",p->actor);
-			printf("\t\t\t\t\t 影片导演:%s \n",p->direct);
-			printf("\t\t\t\t\t 影片地区:%s \n",p->area);
-			printf("\t\t\t\t\t 上映时间:%s \n",p->date);
-			printf("\t\t\t\t\t 影片类型:%s \n",p->type);
-			printf("\t\t\t\t\t 影片规格:%s \n",p->norms);
-			printf("\t\t\t\t\t 影片评分:%f \n",p->score);
+			printf("\t %6d %16s %16s %16s %12s  %12s %16s  %12s       %8.1f\n",p->num,p->name,p->actor,p->direct,p->area,p->date,p->type,p->norms,p->score);
 			p=p->next;
 		}
+		printf("\t=================================================================================================================================================\n");
 	}
 	else
 		printf("\n\t\t\t  目前暂无影片信息！");
-	getchar();
-	getchar();
 }
 
 
@@ -535,30 +538,31 @@ void menu()
 {
 	int choice;
 	printf("\n\n\n\t\t\t------------------------------------------------------\n");
-	printf("\t\t\t|      		*****  WELCOME  *****  		     |\n");
+	printf("\t\t\t|             *****  WELCOME  *****                  |\n");
 	printf("\t\t\t------------------------------------------------------\n");
 	printf("\t\t\t|               1.注册新用户                         |\n");
-	printf("\t\t\t|	        2.登陆账户	                     |\n");
-	printf("\t\t\t|               3.退出		                     |\n");
+	printf("\t\t\t|               2.登陆账户                           |\n");
+	printf("\t\t\t|               3.退出                               |\n");
 	printf("\t\t\t------------------------------------------------------\n");
 	printf("\n\n\t\t\t请在1-3之间进行选择您需要的功能:");
-	scanf("%d",&choice);
-	switch(choice)
-	{
-		case 1:
-			registered();
-			break;
-		case 2:
-			landing();
-			break;
-		case 3:
-			break;
-		default:
-			{
-				printf("\n\t\t\t Sorry! 输入错误，请重新输入正确序号!");
-				menu(); 
-			}
+	while((scanf("%d",&choice)) != EOF){
+		switch(choice)
+		{
+			case 1:
+				registered();
+			case 2:
+				landing();
+			case 3:
+				break;
+			default:
+				{
+					printf("\n\t\t\t Sorry! 输入错误，请重新输入正确序号!");
+					menu(); 
+				}
+				break;
+		}
 	}
+	
 } 
 
 
@@ -573,11 +577,11 @@ void menu1()
 		printf("\t\t\t|     ***** 您好,欢迎使用影片信息管理系统! *****     |\n");
 		printf("\t\t\t------------------------------------------------------\n");
 		printf("\t\t\t|           1.录入影片信息                           |\n");
-		printf("\t\t\t|	    2.查找影片信息	                     |\n");
-		printf("\t\t\t|           3.修改影片信息		             |\n");
-		printf("\t\t\t|           4.删除影片信息		             |\n");
-		printf("\t\t\t|           5.查看影片总数	                     |\n");
-		printf("\t\t\t|           6.查看影片信息		             |\n");
+		printf("\t\t\t|           2.查找影片信息                           |\n");
+		printf("\t\t\t|           3.修改影片信息                           |\n");
+		printf("\t\t\t|           4.删除影片信息                           |\n");
+		printf("\t\t\t|           5.查看影片总数                           |\n");
+		printf("\t\t\t|           6.查看影片信息                           |\n");
 		printf("\t\t\t|           7.退出系统                               |\n"); 
 		printf("\t\t\t------------------------------------------------------\n");
 		printf("\n\n\t\t\t请在1-7之间进行选择您需要的功能:");
@@ -604,15 +608,12 @@ void menu1()
 				Printall();
 				break;		
 		}
-	}
-	
+	}	
 }
 
 
 /*===================================================用户部分函数=========================================*/
 
-
-//注册函数
 
 void registered()
 {
@@ -657,11 +658,12 @@ void registered()
     }
 }
 
+
 //写入用户信息
 void write()
 {
 	FILE *fp;
-	fp=fopen("user.txt","w+");
+	fp=fopen("user.txt","a");
     if(fwrite(&save,sizeof(User),1,fp)!=1)
     {
         printf("\n\t\t\t Sorry!写入文件错误!");
@@ -675,19 +677,19 @@ void write()
 
 void landing()
 {
-    char u[20],c[20],temp[20];      		//定义两个数组，存放键盘输入的用户名和密码
+    char u[20],c[20],temp;      		//定义两个数组，存放键盘输入的用户名和密码
     printf("\n\t\t\t\t 用户登录");
     printf("\n\t\t\t 请输入用户名:");
     scanf("%s",u);
     //判断用户名是否存在
     FILE * fp=fopen("user.txt","r");
-    temp[0]='0';
+    temp='0';
     if(fp==NULL)
     {
         printf("\n\t\t\t Sorry! 用户不存在,请注册!");
         printf("\n\t\t\t	1.注册\n2.重新登陆");
-        temp[0]=getchar();
-        if(temp[0]=='1')
+        temp=getchar();
+        if(temp=='1')
         {
             system("cls");
             registered();
@@ -705,9 +707,9 @@ void landing()
         if(strcmp(save.code,c)!=0)                      //对比输入的密码和读取的密码
         {
             printf("\n\t\t\t Sorry! 密码错误(1.退出 2.重新输入)!");
-            temp[0]=getchar();
+            temp=getchar();
             printf("\n");
-            if(temp[0]=='1')
+            if(temp=='1')
             {
                 fclose(fp);                           //关闭文件防止错误操作
             	break;
@@ -715,11 +717,11 @@ void landing()
         }
         if(strcmp(save.code,c)==0)
             return menu1();
-    }while(temp[0]=='2');
-    getchar();
+    }while(temp=='2');
     printf("\n");
 
 }
+
 
 
 
@@ -731,10 +733,7 @@ int main()
 	film->next=NULL;
 	film->num=0;
     readdata();
-	while(1)
-	{
-		menu();	
-	}
+	menu1();		
 }
 
 
