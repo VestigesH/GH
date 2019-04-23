@@ -1,5 +1,7 @@
+//给定一个链表，删除链表的倒数第 n 个节点，并且输出删除后的链表
 #include <stdio.h>
 #include <stdlib.h> 
+int location;
 struct Data
 {
 	int number;
@@ -11,7 +13,7 @@ void Create(struct Data *pHead)
 	int n;
 	pHead->next = NULL;
 	pNew = pHead;
-	printf("请输入链表：");
+	printf("请输入链表(以0结束输入)：");
 	scanf("%d", &n);
 	while( n != 0)
 	{
@@ -35,28 +37,30 @@ void print(struct Data *pHead)
 } 
 struct Data *Delete(struct Data *pHead)
 {
-	int location, count = 0, count1 = 0;
+	int count = 0, count1 = 0;
 	struct Data *d = (struct Data *)malloc(sizeof(struct Data));
 	struct Data *d1 = (struct Data *)malloc(sizeof(struct Data));
 	struct Data *d2 = (struct Data *)malloc(sizeof(struct Data));
-	d = pHead->next;
-	d1 = pHead->next;
+	d = d1 = pHead->next;
 	d2 = d1->next;
-	printf("请输入你要删除倒数的节点位置(以0结束输入)：");
+	printf("请输入你要删除倒数的节点位置：");
 	scanf("%d", &location);
-	while(d != NULL)
+	while(d->next != NULL)
 	{
 		d = d->next;
 		count++;
 	}
-	while( count1 != count - location - 1 )
+	while( count1 != count - location)
 	{
 		d1 = d1->next;
 		d2 = d2->next;
 		count1++;
 	}
-	if(count1 == count - location - 1)
+	if(count1 == count - location)
+	{
 		d1->next = d2->next;
+		free(d2);
+	} 
 	return pHead;
 }
 int main()
@@ -64,5 +68,6 @@ int main()
 	struct Data *pHead = (struct Data *)malloc(sizeof(struct Data));
 	Create(pHead);  
 	Delete(pHead);
+	printf("删除倒数第%d个节点后的链表为：",location);
 	print(pHead);
 }
