@@ -8,6 +8,5 @@ int main()
 		printf("%d ",x);
 		y=x+y;
 		x=y-x;
-	}
-		
+	}	
 }
