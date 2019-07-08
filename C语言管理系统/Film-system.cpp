@@ -417,7 +417,7 @@ void Change()
 	char A[3];
 	struct Film *pc = film->next;
 	printf("\t\t\t\t\t\t\t 请输入需修改的影片名称:");
-	scanf("%s",&name1);
+	scanf("%s",name1);
 	printf("\t\t\t\t\t\t\t		********修改影片信息********		\n");
 	do
 	{
@@ -426,62 +426,66 @@ void Change()
 			printf("\t\t\t Sorry! 未查询到该影片信息!\n");
 			break;
 		}
-		if(strcmp(name1,pc->name) != 0)
-			pc = pc->next;
-		else if(strcmp(name1,pc->name) == 0)
-		{
-			printf("\n");
-			printf("\t\t\t\t\t\t\t 1.影片编号\n");
-			printf("\t\t\t\t\t\t\t 2.影片名称\n");
-			printf("\t\t\t\t\t\t\t 3.影片主演\n");
-			printf("\t\t\t\t\t\t\t 4.影片导演\n");
-			printf("\t\t\t\t\t\t\t 5.影片地区\n");
-			printf("\t\t\t\t\t\t\t 6.上映时间\n");
-			printf("\t\t\t\t\t\t\t 7.影片类型\n");
-			printf("\t\t\t\t\t\t\t 8.影片规格\n");
-			printf("\t\t\t\t\t\t\t 9.影片评分\n");
-			printf("\t\t\t\t\t\t\t 请输入您所要修改的选项:");
-			scanf("%d",&choice);
-			pc = pc->next;
-			switch(choice)
+		while(pc)
+		{ 
+			if(strcmp(name1,pc->name) != 0)
+				pc = pc->next;
+			if(strcmp(name1,pc->name) == 0)
 			{
-				case 1:
-					printf("\t\t\t\t\t\t\t 请输入新的影片编号:");
-					scanf("%d",&pc->num);
-					break;
-				case 2:
-					printf("\t\t\t\t\t\t\t 请输入新的影片名称:");
-					scanf("%s",pc->name);
-					break;
-				case 3:
-					printf("\t\t\t\t\t\t\t 请输入新的影片主演:");
-					scanf("%s",pc->actor);
-					break;
-				case 4:
-					printf("\t\t\t\t\t\t\t 请输入新的影片导演:");
-					scanf("%s",pc->direct);
-					break;
-				case 5:
-					printf("\t\t\t\t\t\t\t 请输入新的影片地区:");
-					scanf("%s",pc->area);
-					break;
-				case 6:
-					printf("\t\t\t\t\t\t\t 请输入新的上映时间:");
-					scanf("%d",&pc->date);
-					break;
-				case 7:
-					printf("\t\t\t\t\t\t\t 请输入新的影片类型:");
-					scanf("%s",pc->type);
-					break;
-				case 8:
-					printf("\t\t\t\t\t\t\t 请输入新的影片规格:");
-					scanf("%s",pc->norms);
-					break;
-				case 9:
-					printf("\t\t\t\t\t\t\t 请输入新的影片评分:");
-					scanf("%f",&pc->score);
-					break;
+				printf("\n");
+				printf("\t\t\t\t\t\t\t 1.影片编号\n");
+				printf("\t\t\t\t\t\t\t 2.影片名称\n");
+				printf("\t\t\t\t\t\t\t 3.影片主演\n");
+				printf("\t\t\t\t\t\t\t 4.影片导演\n");
+				printf("\t\t\t\t\t\t\t 5.影片地区\n");
+				printf("\t\t\t\t\t\t\t 6.上映时间\n");
+				printf("\t\t\t\t\t\t\t 7.影片类型\n");
+				printf("\t\t\t\t\t\t\t 8.影片规格\n");
+				printf("\t\t\t\t\t\t\t 9.影片评分\n");
+				printf("\t\t\t\t\t\t\t 请输入您所要修改的选项:");
+				scanf("%d",&choice);
+				pc = pc->next;
+				switch(choice)
+				{
+					case 1:
+						printf("\t\t\t\t\t\t\t 请输入新的影片编号:");
+						scanf("%d",&pc->num);
+						break;
+					case 2:
+						printf("\t\t\t\t\t\t\t 请输入新的影片名称:");
+						scanf("%s",pc->name);
+						break;
+					case 3:
+						printf("\t\t\t\t\t\t\t 请输入新的影片主演:");
+						scanf("%s",pc->actor);
+						break;
+					case 4:
+						printf("\t\t\t\t\t\t\t 请输入新的影片导演:");
+						scanf("%s",pc->direct);
+						break;
+					case 5:
+						printf("\t\t\t\t\t\t\t 请输入新的影片地区:");
+						scanf("%s",pc->area);
+						break;
+					case 6:
+						printf("\t\t\t\t\t\t\t 请输入新的上映时间:");
+						scanf("%d",&pc->date);
+						break;
+					case 7:
+						printf("\t\t\t\t\t\t\t 请输入新的影片类型:");
+						scanf("%s",pc->type);
+						break;
+					case 8:
+						printf("\t\t\t\t\t\t\t 请输入新的影片规格:");
+						scanf("%s",pc->norms);
+						break;
+					case 9:
+						printf("\t\t\t\t\t\t\t 请输入新的影片评分:");
+						scanf("%f",&pc->score);
+						break;
+				}
 			}
+			pc = pc->next;
 		}
 		printf("\n\t\t\t\t\t\t\t是否继续修改影片信息？请输入yes or no ?\t");
 		scanf("\n\t\t\t\t\t\t\t%s",&A);
